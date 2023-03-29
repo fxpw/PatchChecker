@@ -4,7 +4,6 @@
 	#include <stdio.h>
 
 
-
 	extern "C" {
 		//return params
 		// true no need update
