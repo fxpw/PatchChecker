@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatchCheckerSharp", "PatchChecker\PatchCheckerSharp.csproj", "{EA31F63C-7ABC-41EE-B899-7A13DF83660C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PatchCheckerSharp", "PatchChecker\PatchCheckerSharp.csproj", "{EA31F63C-7ABC-41EE-B899-7A13DF83660C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AC306C4D-A8BF-4214-A27A-93582CCC6DB4} = {AC306C4D-A8BF-4214-A27A-93582CCC6DB4}
 	EndProjectSection
@@ -30,8 +30,8 @@ Global
 		{EA31F63C-7ABC-41EE-B899-7A13DF83660C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EA31F63C-7ABC-41EE-B899-7A13DF83660C}.Release|x64.ActiveCfg = Release|Any CPU
 		{EA31F63C-7ABC-41EE-B899-7A13DF83660C}.Release|x64.Build.0 = Release|Any CPU
-		{EA31F63C-7ABC-41EE-B899-7A13DF83660C}.Release|x86.ActiveCfg = Release|Any CPU
-		{EA31F63C-7ABC-41EE-B899-7A13DF83660C}.Release|x86.Build.0 = Release|Any CPU
+		{EA31F63C-7ABC-41EE-B899-7A13DF83660C}.Release|x86.ActiveCfg = Release|x86
+		{EA31F63C-7ABC-41EE-B899-7A13DF83660C}.Release|x86.Build.0 = Release|x86
 		{AC306C4D-A8BF-4214-A27A-93582CCC6DB4}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{AC306C4D-A8BF-4214-A27A-93582CCC6DB4}.Debug|Any CPU.Build.0 = Debug|Win32
 		{AC306C4D-A8BF-4214-A27A-93582CCC6DB4}.Debug|x64.ActiveCfg = Debug|Win32

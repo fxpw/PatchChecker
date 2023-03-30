@@ -12,14 +12,16 @@
 
 	//#include <sstream>
 	//#include <iomanip>
+	typedef void(_stdcall* LPEXTFUNCRESPOND) (LPCSTR s);
+
 
 	extern "C" {
 
-		__declspec(dllexport) bool CheckPatch(const char* path, const char* patchName, const char* md5);
+		__declspec(dllexport) bool CheckPatch(const char* pathToFile, const char* md5);
 
-		__declspec(dllexport) bool DownloadPatch(const char* path, const char* name);
 
-		__declspec(dllexport) const char* GetMD5(const char* path, const char* patchName);
+		__declspec(dllexport) void __stdcall GetMD5(const char* path, const char* patchName, LPEXTFUNCRESPOND respond);
+
 	}
 
 #endif // !CHECKER_HPP

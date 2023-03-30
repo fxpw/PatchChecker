@@ -5,22 +5,34 @@ using System.Runtime.InteropServices;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Globalization;
 
+public struct Haash
+{
+    public string hash { get; set; }
+
+    //public  int Count { get; set; }
+}
 
 public class Program
 {
     // Uncomment the following line to resolve.
     static HttpClient httpClient = new HttpClient();
-    [DllImport("PatchChecker.dll", CallingConvention = CallingConvention.Cdecl)]
-    //public static extern int CheckPatch(string path, string name, string md5);
-    //public static extern string CheckPatch(string path, string name, string md5);
-    public static extern bool CheckPatch(string path, string name, string md5);
 
-    [DllImport("PatchChecker.dll", CallingConvention = CallingConvention.Cdecl)]
-    public static extern bool DownloadPatch(string path, string name);
-    [DllImport("PatchChecker.dll", CallingConvention = CallingConvention.Cdecl)]
-    public static extern string GetMD5(string path, string name);
-    public static string path = "D:\\games\\sirus\\World of Warcraft Sirus";
+    [DllImport("PatchChecker.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    public static extern bool CheckPatch(string pathToFile, string md5);
+
+    public delegate void ResponseDelegate(string s);
+    [DllImport("PatchChecker.dll", EntryPoint = "GetMD5", CallingConvention = CallingConvention.StdCall)]
+    /*
+     *  GetMD5(pathToWow, pathToFileFromWowDir, s =>
+        {
+            Console.WriteLine(s);
+        });
+     */
+    public static extern void GetMD5(string path, string name, ResponseDelegate response);
+
+    public static string pathToWow = "D:\\games\\sirus\\World of Warcraft Sirus";
     static async Task Main(){
         await Task.Run(async () =>
         {
@@ -30,54 +42,31 @@ public class Program
             // получаем ответ
             using HttpResponseMessage response = await httpClient.SendAsync(request);
 
-            // содержимое ответа
-            Console.WriteLine("\nContent");
             string content = await response.Content.ReadAsStringAsync();
-            //Console.WriteLine(content);
-            //Console.WriteLine("\nNew");
-            var PathWow = "D:\\games\\sirus\\World of Warcraft Sirus";
-            Console.WriteLine(PathWow);
+            Console.WriteLine(pathToWow);
             Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(content);
-            for (int i = 1; i < obj?["patches"]?.Count(); i++)
-            {
-                //Console.WriteLine(obj?["patches"]?[i]);
+            for (int i = 1; i < obj?["patches"]?.Count(); i++){
+                
+                var info = obj?["patches"]?[i];
+                Console.WriteLine(info);
                 //Console.WriteLine(obj?["patches"]?[i]?["filename"]);
                 //Console.WriteLine(obj?["patches"]?[i]?["path"]);
-                //Console.WriteLine(obj?["patches"]?[i]?["size"]);
-                //Console.WriteLine(obj?["patches"]?[i]?["md5"]);
-                ////Console.WriteLine(obj?["patches"]?[i]["host"]);
-                //Console.WriteLine(obj?["patches"]?[i]?["updated_at"]);
-                ////Console.WriteLine(obj?["patches"]?[i]["storage_path"]);
-                //var downloadLink = (string)obj?["patches"]?[i]?["host"] + (string)obj?["patches"]?[i]?["storage_path"];
-                //Console.WriteLine(downloadLink, "link");
-                //Console.WriteLine("----------------------");
-                if ((string)obj?["patches"]?[i]?["filename"] == "patch-ruRU-8.mpq")
+                var time  = DateTime.Parse((string)info["updated_at"], DateTimeFormatInfo.InvariantInfo);
+                var timeNow = DateTime.Now;
+                if (time > timeNow)
                 {
-                    Console.WriteLine((string)obj?["patches"]?[i]?["filename"]);
-                    Console.WriteLine(obj?["patches"]?[i]?["md5"]);
-                    Console.WriteLine(CheckPatch("da", "./patch-ruRU-8.mpq", (string)obj?["patches"]?[i]?["md5"]));
-                    //Console.WriteLine((string)GetMD5("da", "./patch-ruRU-8.mpq"));
+                    Console.WriteLine(time);
+                    var cBool = CheckPatch(pathToWow + info?["path"] + info?["filename"], (string)info?["md5"]);
+                    //await Task.Run(async () =>
+                    //{
+                    //await Task.Run(() => { Console.WriteLine(); });
+                    //});
+                    Console.WriteLine("----------------------");
                 }
 
 
-
             }
-            
-            //Console.WriteLine(obj.ToString());
-            //var objects = JsonConvert.DeserializeObject<List<string>>(content);
-            //for(int i = 0; i < objects.Count(); i++)
-            //{
-            //Console.WriteLine(objects[i]);
-            //}
-            //Console.WriteLine(CheckPatch(path, "da"));
         });
-        //Console.WriteLine(CheckPatch("da", "./patch-ruRU-8.mpq"));
-        
-        //_ = DLL.GetJson(httpClient);
-        //var task = DLL.GetJson(httpClient);
-        //var result = task.WaitAndUnwrapException();
-        //var result = AsyncContext.Run(MyAsyncMethod);
-
     }
 }
 
