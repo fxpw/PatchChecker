@@ -48,23 +48,18 @@ public class Program
             for (int i = 1; i < obj?["patches"]?.Count(); i++){
                 
                 var info = obj?["patches"]?[i];
-                Console.WriteLine(info);
+                //Console.WriteLine(info);
                 //Console.WriteLine(obj?["patches"]?[i]?["filename"]);
                 //Console.WriteLine(obj?["patches"]?[i]?["path"]);
                 var time  = DateTime.Parse((string)info["updated_at"], DateTimeFormatInfo.InvariantInfo);
                 var timeNow = DateTime.Now;
                 if (time > timeNow)
                 {
-                    Console.WriteLine(time);
-                    var cBool = CheckPatch(pathToWow + info?["path"] + info?["filename"], (string)info?["md5"]);
-                    //await Task.Run(async () =>
-                    //{
-                    //await Task.Run(() => { Console.WriteLine(); });
-                    //});
-                    Console.WriteLine("----------------------");
+                    //Console.WriteLine(time);
+                    var iSNeedUpdate = CheckPatch(pathToWow + info?["path"] + info?["filename"], (string)info?["md5"]);
+
                 }
-
-
+                //Console.WriteLine("----------------------");
             }
         });
     }

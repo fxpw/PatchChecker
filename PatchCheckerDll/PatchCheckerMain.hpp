@@ -2,7 +2,7 @@
 #define CHECKER_HPP
 	#include <string>
 	#include <stdio.h>
-	#include "hashpp.h"
+	#include "hashpp.hpp"
 	//#define MAX_SIZE_FOR_STACK 16382
 	//#include <iostream>
 	//#include <iomanip>
