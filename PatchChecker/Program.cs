@@ -64,7 +64,7 @@ public class Program
                 //if (time > timeLastCheck) //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!todo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! проверка по дате получается если прикрутить то можно скипать лишние проверки
                 //{ 
                 //Console.WriteLine(time);
-                var isUpdated = CheckPatch(pathToWow + info?["path"] + info?["filename"], (string)info?["md5"]);
+                var isUpdated = CheckPatch(pathToFile, (string)info?["md5"]);
                 if (!isUpdated)
                 {
                     //using (HttpClient client = new System.Net.Http.HttpClient())
