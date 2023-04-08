@@ -3,15 +3,7 @@
 	#include <string>
 	#include <stdio.h>
 	#include "hashpp.hpp"
-	//#define MAX_SIZE_FOR_STACK 16382
-	//#include <iostream>
-	//#include <iomanip>
-	//#include <fstream>
-	//#include <string>
-	//#include <openssl/md5.h>
 
-	//#include <sstream>
-	//#include <iomanip>
 	typedef void(_stdcall* LPEXTFUNCRESPOND) (LPCSTR s);
 
 
