@@ -20,14 +20,15 @@ __declspec(dllexport) bool CheckPatch(const char* pathToFile, const char* md5) {
 }
 
 
-__declspec(dllexport) void __stdcall GetMD5(const char* path, const char* patchName, LPEXTFUNCRESPOND respond) {
+__declspec(dllexport) void __stdcall GetMD5(const char* pathToFile, LPEXTFUNCRESPOND respondString) {
 
-    auto hash = hashpp::get::getFileHash(hashpp::ALGORITHMS::MD5, patchName);
+    auto hash = hashpp::get::getFileHash(hashpp::ALGORITHMS::MD5, pathToFile);
 
     std::string forReturn = hash.getString();
+    std::transform(forReturn.begin(), forReturn.end(), forReturn.begin(), toupper);
     //std::cout << forReturn << " returned md5 from GetMD5()" << std::endl;
     //const char* fr = forReturn.c_str();
-    respond(forReturn.c_str());
+    respondString(forReturn.c_str());
 
 }
 

@@ -11,8 +11,7 @@
 
 		__declspec(dllexport) bool CheckPatch(const char* pathToFile, const char* md5);
 
-
-		__declspec(dllexport) void __stdcall GetMD5(const char* path, const char* patchName, LPEXTFUNCRESPOND respond);
+		__declspec(dllexport) void __stdcall GetMD5(const char* pathToFile, LPEXTFUNCRESPOND respondString);
 
 	}
 
