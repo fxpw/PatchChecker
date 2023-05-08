@@ -74,29 +74,36 @@ public class Program
             }
         }
         // тут можно накидывать в какую то переменную +1 чтобы чекать прогресс
-        //Console.WriteLine(pathToFile + " Checked be " + (isUpdated ? "updated " : "no updated"));
+        Console.WriteLine(pathToFile + " Checked be " + (isUpdated ? "updated " : "no updated"));
     }
 
     static async Task Main()
     {
         List<Task> tasks = new List<Task>();
         // запросики
-        using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "http://51.15.228.31:8080/api/client/patches");
-        using HttpResponseMessage response = await httpClient.SendAsync(request);
-        string content = await response.Content.ReadAsStringAsync();
-        //Console.WriteLine(pathToWow);
-        Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(content);
-        // проверка патчей
-        for (int i = 1; i < obj?["patches"]?.Count(); i++)
+        using (var client = new HttpClient())
         {
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://51.15.228.31:8080/api/client/patches");
+            var response = await client.SendAsync(request);
+            string content = await response.Content.ReadAsStringAsync();
+            //Console.WriteLine(pathToWow);
+            Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(content);
+            // проверка патчей
+            for (int i = 1; i < obj?["patches"]?.Count(); i++)
+            {
 
-            var info = obj?["patches"]?[i];
-            //Console.WriteLine(info);
+                var info = obj?["patches"]?[i];
+                //Console.WriteLine(info);
 
-            tasks.Add(Task.Run(() => CheckPatchAsync(info)));
+                tasks.Add(Task.Run(() => CheckPatchAsync(info)));
 
+            }
+            await Task.WhenAll(tasks);
+            // обработка ответа от сервера
         }
-        await Task.WhenAll(tasks);
+        //using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "http://51.15.228.31:8080/api/client/patches");
+        //using HttpResponseMessage response = await httpClient.SendAsync(request);
+        
     }
 }
 
